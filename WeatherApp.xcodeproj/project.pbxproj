@@ -14,8 +14,9 @@
 		AC63C4BB243A09AA00AD8068 /* AppCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = AC63C4BA243A09AA00AD8068 /* AppCoordinator.m */; };
 		AC63C4C9243A93A100AD8068 /* SearchedCityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC63C4C7243A93A100AD8068 /* SearchedCityTableViewCell.m */; };
 		AC63C4CA243A93A100AD8068 /* SearchedCityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC63C4C8243A93A100AD8068 /* SearchedCityTableViewCell.xib */; };
-		AC63C4D0243A9B6F00AD8068 /* SearchedCity.m in Sources */ = {isa = PBXBuildFile; fileRef = AC63C4CF243A9B6F00AD8068 /* SearchedCity.m */; };
-		AC63C4D3243AA04500AD8068 /* SearchCityQueryService.m in Sources */ = {isa = PBXBuildFile; fileRef = AC63C4D2243AA04500AD8068 /* SearchCityQueryService.m */; };
+		AC63C4D0243A9B6F00AD8068 /* CityEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = AC63C4CF243A9B6F00AD8068 /* CityEntity.m */; };
+		AC63C4D3243AA04500AD8068 /* FindCityQueryService.m in Sources */ = {isa = PBXBuildFile; fileRef = AC63C4D2243AA04500AD8068 /* FindCityQueryService.m */; };
+		AC8199CD243E8D2600A40AB1 /* CitiesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8199CC243E8D2600A40AB1 /* CitiesModel.m */; };
 		ACFE175B2438D56000532E9E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ACFE175A2438D56000532E9E /* AppDelegate.m */; };
 		ACFE17642438D56000532E9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACFE17622438D56000532E9E /* Main.storyboard */; };
 		ACFE17662438D56300532E9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACFE17652438D56300532E9E /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC60736E243B6348004899C3 /* FindCityQueryService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindCityQueryService.h; sourceTree = "<group>"; };
 		AC63C4AF2439EBC800AD8068 /* WTRWelcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRWelcomeViewController.h; sourceTree = "<group>"; };
 		AC63C4B02439EBC800AD8068 /* WTRWelcomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRWelcomeViewController.m; sourceTree = "<group>"; };
 		AC63C4B12439EBC800AD8068 /* WTRWelcomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WTRWelcomeViewController.xib; sourceTree = "<group>"; };
@@ -52,10 +54,11 @@
 		AC63C4C6243A93A100AD8068 /* SearchedCityTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchedCityTableViewCell.h; sourceTree = "<group>"; };
 		AC63C4C7243A93A100AD8068 /* SearchedCityTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchedCityTableViewCell.m; sourceTree = "<group>"; };
 		AC63C4C8243A93A100AD8068 /* SearchedCityTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchedCityTableViewCell.xib; sourceTree = "<group>"; };
-		AC63C4CE243A9B6F00AD8068 /* SearchedCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchedCity.h; sourceTree = "<group>"; };
-		AC63C4CF243A9B6F00AD8068 /* SearchedCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchedCity.m; sourceTree = "<group>"; };
-		AC63C4D1243AA04500AD8068 /* SearchCityQueryService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchCityQueryService.h; sourceTree = "<group>"; };
-		AC63C4D2243AA04500AD8068 /* SearchCityQueryService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchCityQueryService.m; sourceTree = "<group>"; };
+		AC63C4CE243A9B6F00AD8068 /* CityEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityEntity.h; sourceTree = "<group>"; };
+		AC63C4CF243A9B6F00AD8068 /* CityEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityEntity.m; sourceTree = "<group>"; };
+		AC63C4D2243AA04500AD8068 /* FindCityQueryService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FindCityQueryService.m; sourceTree = "<group>"; };
+		AC8199CB243E8D2600A40AB1 /* CitiesModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CitiesModel.h; sourceTree = "<group>"; };
+		AC8199CC243E8D2600A40AB1 /* CitiesModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CitiesModel.m; sourceTree = "<group>"; };
 		ACFE17562438D56000532E9E /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACFE17592438D56000532E9E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		ACFE175A2438D56000532E9E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -96,8 +99,12 @@
 		AC63C4D4243AA04C00AD8068 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AC63C4D1243AA04500AD8068 /* SearchCityQueryService.h */,
-				AC63C4D2243AA04500AD8068 /* SearchCityQueryService.m */,
+				AC63C4CE243A9B6F00AD8068 /* CityEntity.h */,
+				AC63C4CF243A9B6F00AD8068 /* CityEntity.m */,
+				AC60736E243B6348004899C3 /* FindCityQueryService.h */,
+				AC63C4D2243AA04500AD8068 /* FindCityQueryService.m */,
+				AC8199CB243E8D2600A40AB1 /* CitiesModel.h */,
+				AC8199CC243E8D2600A40AB1 /* CitiesModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -137,8 +144,6 @@
 				AC63C4C6243A93A100AD8068 /* SearchedCityTableViewCell.h */,
 				AC63C4C7243A93A100AD8068 /* SearchedCityTableViewCell.m */,
 				AC63C4C8243A93A100AD8068 /* SearchedCityTableViewCell.xib */,
-				AC63C4CE243A9B6F00AD8068 /* SearchedCity.h */,
-				AC63C4CF243A9B6F00AD8068 /* SearchedCity.m */,
 				AC63C4D4243AA04C00AD8068 /* Model */,
 				ACFE17652438D56300532E9E /* Assets.xcassets */,
 				ACFE17672438D56300532E9E /* LaunchScreen.storyboard */,
@@ -281,14 +286,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC63C4D0243A9B6F00AD8068 /* SearchedCity.m in Sources */,
-				AC63C4D3243AA04500AD8068 /* SearchCityQueryService.m in Sources */,
+				AC63C4D0243A9B6F00AD8068 /* CityEntity.m in Sources */,
+				AC63C4D3243AA04500AD8068 /* FindCityQueryService.m in Sources */,
 				AC63C4BB243A09AA00AD8068 /* AppCoordinator.m in Sources */,
 				AC63C4C9243A93A100AD8068 /* SearchedCityTableViewCell.m in Sources */,
 				AC63C4B22439EBC800AD8068 /* WTRWelcomeViewController.m in Sources */,
 				AC63C4B72439F7E700AD8068 /* WTRSearchTableViewController.m in Sources */,
 				ACFE175B2438D56000532E9E /* AppDelegate.m in Sources */,
 				ACFE176C2438D56300532E9E /* main.m in Sources */,
+				AC8199CD243E8D2600A40AB1 /* CitiesModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

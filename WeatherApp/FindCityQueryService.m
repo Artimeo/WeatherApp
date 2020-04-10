@@ -6,36 +6,37 @@
 //  Copyright © 2020 Artem Buryakov. All rights reserved.
 //
 
-#import "SearchCityQueryService.h"
-#import "SearchedCity.h"
+#import "FindCityQueryService.h"
+#import "CityEntity.h"
 
 typedef NSDictionary <NSString *, id> * JSONDictionary;
 const NSString *qAPPID = @"6d8e495ca73d5bbc1d6bf8ebd52c4";
 const NSString *qType = @"like";
 const NSString *qUnits = @"metric";
+const NSString *qLang = @"ru";
 
-@interface SearchCityQueryService()
+@interface FindCityQueryService()
 @property (nonatomic, copy) NSString *errorMessage;
-@property (nonatomic, strong) NSMutableArray <SearchedCity *> *cities;
+@property (nonatomic, strong) NSMutableArray <CityEntity *> *cities;
 @property (nonatomic, strong) NSURLSession *defaultSession;
 @property (nonatomic, strong) NSURLSessionDataTask *dataTask;
 @end
 
 
-@implementation SearchCityQueryService
+@implementation FindCityQueryService
 
-- (void)getSearchResultsWithQuery:(NSString *)query completion:(QueryResult)completion {
+- (void)getSearchResultsWithQuery:(NSString *)qCity completion:(QueryResult)completion {
     [self.dataTask cancel];
 
     NSURLComponents *urlComponents = [NSURLComponents componentsWithString:@"http://api.openweathermap.org/data/2.5/find"];
-    urlComponents.query = [NSString stringWithFormat:@"?q=%@&type=%@&units=%@APPID=%@", query, qType, qUnits, qAPPID];
+    urlComponents.query = [NSString stringWithFormat:@"?q=%@&type=%@&units=%@&lang=%@&APPID=%@", qCity, qType, qUnits, qLang, qAPPID];
     
     NSURL *url = urlComponents.URL;
     if (!url) {
         return;
     }
     
-    __weak SearchCityQueryService *welf = self;
+    __weak FindCityQueryService *welf = self;
     self.dataTask = [self.defaultSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != nil) {
             welf.errorMessage = [self.errorMessage stringByAppendingString:@"DataTask error: \(error.localizedDescription)\n"];
@@ -76,25 +77,22 @@ const NSString *qUnits = @"metric";
         return;
     } @finally { }
     
-    NSArray *array = response[@"results"];
-    if (!array) {
-        self.errorMessage = [self.errorMessage stringByAppendingString:@"Dictionary does not contain results key\n"];
+    NSString *statusCode = response[@"cod"];
+    
+    if (![statusCode isEqualToString:@"200"]) {
+        self.errorMessage = [self.errorMessage stringByAppendingFormat:@"Server returned status code %@\n", statusCode];
+        return;
     }
     
-    int index = 0;
+    NSArray *cities = response[@"list"];
+    if (!cities) {
+        self.errorMessage = [self.errorMessage stringByAppendingString:@"Dictionary does not contain results key\n"];
+        return;
+    }
     
-    for (NSDictionary *trackDictionary in array) {
-        NSString *previewURLString = trackDictionary[@"previewUrl"];
-        NSURL *previewURL = [NSURL URLWithString:previewURLString];
-        NSString *city = trackDictionary[@"city"];
-        NSString *country = trackDictionary[@"country"];
-        if (!previewURLString && !previewURL && !city && !country) {
-            self.errorMessage = [self.errorMessage stringByAppendingString:@"Problem parsing trackDictionary\n"];
-            return;
-        }
-        SearchedCity *searchedCity = [[SearchedCity alloc] initWithCity:city country:country previewURL:previewURL index:index];
-        [self.cities addObject:searchedCity];
-        index++;
+    for (NSDictionary *city in cities) {
+        CityEntity *foundCity = [[CityEntity alloc] initWithDictionary:city];
+        [self.cities addObject:foundCity];
     }
 }
 

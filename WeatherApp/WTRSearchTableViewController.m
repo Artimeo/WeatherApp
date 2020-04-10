@@ -8,11 +8,14 @@
 
 #import "WTRSearchTableViewController.h"
 #import "SearchedCityTableViewCell.h"
+#import "CitiesModel.h"
 
 static NSString *kCellIdentifier = @"searchedCityCell";
 
 @interface WTRSearchTableViewController ()
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) UISearchController *searchController;
+@property (nonatomic, strong) CitiesModel *model;
 @end
 
 @implementation WTRSearchTableViewController
@@ -24,21 +27,18 @@ static NSString *kCellIdentifier = @"searchedCityCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    [self.searchBar becomeFirstResponder];
     [self.tableView registerNib:[UINib nibWithNibName:@"SearchedCityTableViewCell" bundle:nil] forCellReuseIdentifier:kCellIdentifier];
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:self];
+    [self.searchController setSearchResultsUpdater:self.searchController.searchResultsUpdater];
+    self.searchBar = self.searchController.searchBar;
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    [self.searchBar becomeFirstResponder];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return [self.model citiesCount];
 }
 
 - (SearchedCityTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -49,6 +49,16 @@ static NSString *kCellIdentifier = @"searchedCityCell";
         cell.country.text = @"asdqwe";
     }
     return cell;
+}
+
+#pragma mark - Search filter
+
+
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"name contains[c] %@", searchText];
+    searchResults = [recipes filteredArrayUsingPredicate:resultPredicate];
 }
 
 /*
