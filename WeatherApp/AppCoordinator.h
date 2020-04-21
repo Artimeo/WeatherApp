@@ -13,8 +13,9 @@
 
 @interface AppCoordinator : NSObject
 
+@property (nonatomic, strong, readonly) UINavigationController *navigationController;
+
 - (instancetype)initWithNavigationController:(UINavigationController *)nvc;
-- (void)start;
 
 @end
 

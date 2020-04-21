@@ -7,15 +7,39 @@
 //
 
 #import "CitiesModel.h"
+#import "FindCityQueryService.h"
+
+@interface CitiesModel()
+@property (nonatomic, strong) FindCityQueryService *queryService;
+@end
 
 @implementation CitiesModel
 
-- (CityEntity *)cityAtIndex:(NSInteger)index {
+- (void)loadCitiesWithQuery:(NSString *)searchQuery completion:(VoidBlock)onCompletion error:(ErrorBlock)onError {
+    __weak CitiesModel *welf = self;
+    [self.queryService getSearchResultsWithQuery:searchQuery completion:^(NSArray<CityItem *> *cities, NSString *error) {
+        welf.cities = cities;
+        if (error == nil) {
+            onCompletion();
+        } else {
+            onError(error);
+        }
+    }];
+}
+
+- (CityItem *)cityAtIndex:(NSInteger)index {
     return [self.cities objectAtIndex:index];
 };
 
-- (NSUInteger)citiesCount {
+- (NSUInteger)count {
     return self.cities.count;
 };
+
+- (FindCityQueryService *)queryService {
+    if (!_queryService) {
+        _queryService = [[FindCityQueryService alloc] init];
+    }
+    return _queryService;
+}
 
 @end

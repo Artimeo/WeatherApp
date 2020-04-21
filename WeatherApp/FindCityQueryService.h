@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class CityEntity;
+@class CityItem;
 
-typedef void (^QueryResult) (NSArray <CityEntity *> *, NSString *error);
+typedef void (^QueryResult) (NSArray <CityItem *> *, NSString *error);
 
 @interface FindCityQueryService : NSObject
 - (void)getSearchResultsWithQuery:(NSString *)qCity completion:(QueryResult)completion;

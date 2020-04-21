@@ -7,7 +7,7 @@
 //
 
 #import "FindCityQueryService.h"
-#import "CityEntity.h"
+#import "CityItem.h"
 
 typedef NSDictionary <NSString *, id> * JSONDictionary;
 const NSString *qAPPID = @"6d8e495ca73d5bbc1d6bf8ebd52c4";
@@ -17,7 +17,7 @@ const NSString *qLang = @"ru";
 
 @interface FindCityQueryService()
 @property (nonatomic, copy) NSString *errorMessage;
-@property (nonatomic, strong) NSMutableArray <CityEntity *> *cities;
+@property (nonatomic, strong) NSMutableArray <CityItem *> *cities;
 @property (nonatomic, strong) NSURLSession *defaultSession;
 @property (nonatomic, strong) NSURLSessionDataTask *dataTask;
 @end
@@ -39,7 +39,7 @@ const NSString *qLang = @"ru";
     __weak FindCityQueryService *welf = self;
     self.dataTask = [self.defaultSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != nil) {
-            welf.errorMessage = [self.errorMessage stringByAppendingString:@"DataTask error: \(error.localizedDescription)\n"];
+            welf.errorMessage = [self.errorMessage stringByAppendingFormat:@"DataTask error: %@\n", error.localizedDescription];
             welf.dataTask = nil;
             completion(self.cities, self.errorMessage);
             return;
@@ -73,12 +73,11 @@ const NSString *qLang = @"ru";
     @try {
         response = (JSONDictionary)[NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     } @catch (NSError *parseError) {
-        self.errorMessage = [self.errorMessage stringByAppendingString:@"JSONSerialization error: \(parseError.localizedDescription)\n"];
+        self.errorMessage = [self.errorMessage stringByAppendingFormat:@"JSONSerialization error: %@\n", parseError.localizedDescription];
         return;
     } @finally { }
     
     NSString *statusCode = response[@"cod"];
-    
     if (![statusCode isEqualToString:@"200"]) {
         self.errorMessage = [self.errorMessage stringByAppendingFormat:@"Server returned status code %@\n", statusCode];
         return;
@@ -91,7 +90,7 @@ const NSString *qLang = @"ru";
     }
     
     for (NSDictionary *city in cities) {
-        CityEntity *foundCity = [[CityEntity alloc] initWithDictionary:city];
+        CityItem *foundCity = [[CityItem alloc] initWithDictionary:city];
         [self.cities addObject:foundCity];
     }
 }

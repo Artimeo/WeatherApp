@@ -11,12 +11,23 @@
 #import "WTRSearchTableViewController.h"
 
 @interface AppCoordinator()
-@property (nonatomic, strong) UINavigationController *navigationController;
+@property (nonatomic, strong, readwrite) UINavigationController *navigationController;
 @property (nonatomic, strong) WTRWelcomeViewController *welcomeViewController;
 @property (nonatomic, strong) WTRSearchTableViewController *searchViewController;
 @end
 
 @implementation AppCoordinator
+
+- (instancetype)init {
+    self = [super init];
+    if (self){
+        __weak AppCoordinator *welf = self;
+        [self startWithCompletion:^{
+            welf.navigationController = [[UINavigationController alloc] initWithRootViewController:welf.welcomeViewController];
+        }];
+    }
+    return self;
+}
 
 - (instancetype)initWithNavigationController:(UINavigationController *)nvc {
     self = [super init];
@@ -26,20 +37,23 @@
     return self;
 }
 
-- (void)start {
+- (void)startWithCompletion:(void (^)(void))completion {
     [self showWelcomeScreen];
+    completion();
 }
 
 - (void)showWelcomeScreen {
     if (!self.welcomeViewController) {
+        __weak AppCoordinator *welf = self;
         self.welcomeViewController = [[WTRWelcomeViewController alloc] initWithCompletion:^{
-            [self showSearchViewController];
+            [welf showSearchViewController];
         }];
         [self.navigationController addChildViewController:self.welcomeViewController];
     }
 }
 
 - (void)showSearchViewController {
+    //__weak AppCoordinator *welf = self;
     self.searchViewController = [[WTRSearchTableViewController alloc] initWithCompletion:^{
         
     }];

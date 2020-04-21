@@ -1,14 +1,14 @@
 //
-//  SearchedCity.m
+//  CityItem.m
 //  WeatherApp
 //
 //  Created by Artem Buryakov on 06.04.2020.
 //  Copyright © 2020 Artem Buryakov. All rights reserved.
 //
 
-#import "CityEntity.h"
+#import "CityItem.h"
 
-@interface CityEntity()
+@interface CityItem()
 @property (nonatomic, readwrite, strong) NSString *cityID;
 @property (nonatomic, readwrite, strong) NSString *name;
 @property (nonatomic, readwrite, strong) NSString *country;
@@ -49,7 +49,7 @@
 @property (nonatomic, readwrite, strong) NSTimeZone *timeZone;
 @end
 
-@implementation CityEntity
+@implementation CityItem
 
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dict {
     self = [super init];

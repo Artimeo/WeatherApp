@@ -16,11 +16,13 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    UINavigationController *navigationController = [[UINavigationController alloc] init];
-    self.appCoordinator = [[AppCoordinator alloc] initWithNavigationController:navigationController];
-    self.window.rootViewController = navigationController;
-
-    [self.appCoordinator start];
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    
+    self.appCoordinator = [[AppCoordinator alloc] init];
+    
+    self.window.rootViewController = self.appCoordinator.navigationController;
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

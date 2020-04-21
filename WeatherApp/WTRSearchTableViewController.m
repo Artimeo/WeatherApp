@@ -9,11 +9,11 @@
 #import "WTRSearchTableViewController.h"
 #import "SearchedCityTableViewCell.h"
 #import "CitiesModel.h"
+#import "CityItem.h"
 
 static NSString *kCellIdentifier = @"searchedCityCell";
 
-@interface WTRSearchTableViewController ()
-@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
+@interface WTRSearchTableViewController () <UISearchBarDelegate>
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) CitiesModel *model;
 @end
@@ -27,38 +27,95 @@ static NSString *kCellIdentifier = @"searchedCityCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.tableView registerNib:[UINib nibWithNibName:@"SearchedCityTableViewCell" bundle:nil] forCellReuseIdentifier:kCellIdentifier];
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:self];
-    [self.searchController setSearchResultsUpdater:self.searchController.searchResultsUpdater];
-    self.searchBar = self.searchController.searchBar;
-    self.tableView.tableHeaderView = self.searchController.searchBar;
-    [self.searchBar becomeFirstResponder];
+    [self registerCell];
+    [self setupSearchController];
 }
 
-#pragma mark - Table view data source
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.searchController setActive:YES];
+    [self.searchController.searchBar becomeFirstResponder];
+}
+
+- (CitiesModel *)model {
+    if (!_model) {
+        _model = [[CitiesModel alloc] init];
+    }
+    return _model;
+}
+
+- (void)registerCell {
+    [self.tableView registerNib:[UINib nibWithNibName:@"SearchedCityTableViewCell" bundle:nil] forCellReuseIdentifier:kCellIdentifier];
+}
+
+- (void)setupSearchController {
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.obscuresBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.placeholder = @"Search Cities";
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.definesPresentationContext = YES;
+}
+
+- (void)addRefreshControl {
+    self.tableView.refreshControl = [UIRefreshControl new];
+    self.tableView.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Loading..."];
+    [self.tableView.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+}
+
+
+#pragma mark - UITableViewDataSource
+
+- (void)configureCell:(SearchedCityTableViewCell *)cell withCity:(CityItem *) city{
+    cell.city.text = city.name;
+    cell.country.text = city.country;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.model citiesCount];
+    return self.model.count;
 }
 
 - (SearchedCityTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SearchedCityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
     
     if (cell) {
-        cell.city.text = @"asd";
-        cell.country.text = @"asdqwe";
+        [self configureCell:cell withCity:[self.model cityAtIndex:indexPath.row]];
     }
     return cell;
 }
+         
+ -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+     return  UITableViewAutomaticDimension;
+ }
 
-#pragma mark - Search filter
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    NSString *searchQuery = self.searchController.searchBar.text;
+    if (searchQuery.length > 1) {
+        
+        __weak WTRSearchTableViewController *welf = self;
+        [self.model loadCitiesWithQuery:searchQuery completion:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [welf.tableView reloadData];
+            });
+        } error:^(NSString *errorMessage){
+            [welf showAlertWithMessage:errorMessage];
+        }];
+    }
+}
 
 
+#pragma mark - Alert & etc.
 
-- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
-{
-    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"name contains[c] %@", searchText];
-    searchResults = [recipes filteredArrayUsingPredicate:resultPredicate];
+- (void)showAlertWithMessage:(NSString *)errorMessage {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+       handler:^(UIAlertAction * action) {}];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 /*

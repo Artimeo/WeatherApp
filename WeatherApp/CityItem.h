@@ -1,5 +1,5 @@
 //
-//  SearchedCity.h
+//  CityItem.h
 //  WeatherApp
 //
 //  Created by Artem Buryakov on 06.04.2020.
@@ -10,7 +10,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface CityEntity : NSObject
+@interface CityItem : NSObject
 @property (nonatomic, readonly, strong) NSString *cityID;
 @property (nonatomic, readonly, strong) NSString *name;
 @property (nonatomic, readonly, strong) NSString *country;
