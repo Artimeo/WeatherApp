@@ -10,7 +10,7 @@
 #import "CityItem.h"
 
 typedef NSDictionary <NSString *, id> * JSONDictionary;
-const NSString *qAPPID = @"6d8e495ca73d5bbc1d6bf8ebd52c4";
+const NSString *qAPPID = @"b25c1900a4b79a996e0bb44831c80b20";
 const NSString *qType = @"like";
 const NSString *qUnits = @"metric";
 const NSString *qLang = @"ru";
@@ -29,7 +29,7 @@ const NSString *qLang = @"ru";
     [self.dataTask cancel];
 
     NSURLComponents *urlComponents = [NSURLComponents componentsWithString:@"http://api.openweathermap.org/data/2.5/find"];
-    urlComponents.query = [NSString stringWithFormat:@"?q=%@&type=%@&units=%@&lang=%@&APPID=%@", qCity, qType, qUnits, qLang, qAPPID];
+    urlComponents.query = [NSString stringWithFormat:@"q=%@&type=%@&units=%@&lang=%@&APPID=%@", qCity, qType, qUnits, qLang, qAPPID];
     
     NSURL *url = urlComponents.URL;
     if (!url) {
@@ -38,26 +38,19 @@ const NSString *qLang = @"ru";
     
     __weak FindCityQueryService *welf = self;
     self.dataTask = [self.defaultSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error != nil) {
-            welf.errorMessage = [self.errorMessage stringByAppendingFormat:@"DataTask error: %@\n", error.localizedDescription];
-            welf.dataTask = nil;
-            completion(self.cities, self.errorMessage);
-            return;
-        }
         
-        if (data == nil) {
-            completion(self.cities, self.errorMessage);
+        if (error) {
+            welf.errorMessage = [welf.errorMessage stringByAppendingFormat:@"DataTask error: %@\n", error.localizedDescription];
             welf.dataTask = nil;
+            completion(welf.cities, welf.errorMessage);
             return;
         }
     
-        NSHTTPURLResponse *resp = (NSHTTPURLResponse *)response;
-        if (resp != nil && resp.statusCode == 200) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        if (httpResponse) {
             welf.dataTask = nil;
             [welf updateSearchResultsWithData:data];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(self.cities, self.errorMessage);
-            });
+            completion(welf.cities, welf.errorMessage);
         }
     }];
     
@@ -76,6 +69,11 @@ const NSString *qLang = @"ru";
         self.errorMessage = [self.errorMessage stringByAppendingFormat:@"JSONSerialization error: %@\n", parseError.localizedDescription];
         return;
     } @finally { }
+    
+    if (!response) {
+        self.errorMessage = [self.errorMessage stringByAppendingString:@"Empty Data\n"];
+        return;
+    }
     
     NSString *statusCode = response[@"cod"];
     if (![statusCode isEqualToString:@"200"]) {

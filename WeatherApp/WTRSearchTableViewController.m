@@ -31,7 +31,7 @@ static NSString *kCellIdentifier = @"searchedCityCell";
     [self setupSearchController];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.searchController setActive:YES];
     [self.searchController.searchBar becomeFirstResponder];
@@ -93,17 +93,15 @@ static NSString *kCellIdentifier = @"searchedCityCell";
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     NSString *searchQuery = self.searchController.searchBar.text;
-    if (searchQuery.length > 1) {
-        
-        __weak WTRSearchTableViewController *welf = self;
-        [self.model loadCitiesWithQuery:searchQuery completion:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [welf.tableView reloadData];
-            });
-        } error:^(NSString *errorMessage){
-            [welf showAlertWithMessage:errorMessage];
-        }];
-    }
+    
+    __weak WTRSearchTableViewController *welf = self;
+    [self.model loadCitiesWithQuery:searchQuery completion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [welf.tableView reloadData];
+        });
+    } error:^(NSString *errorMessage){
+        [welf showAlertWithMessage:errorMessage];
+    }];
 }
 
 
