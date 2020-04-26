@@ -63,7 +63,7 @@
             CLLocationDegrees longitude = [coord[@"lon"] doubleValue];
             _coordinates = CLLocationCoordinate2DMake(latitude, longitude);
         }
-        NSDictionary *weather = dict[@"weather"];
+        NSDictionary *weather = [dict[@"weather"] firstObject];
         if ([weather isKindOfClass:[NSDictionary class]]) {
             _weatherID = [weather[@"id"] integerValue];
             _weatherState = weather[@"main"];
@@ -98,17 +98,21 @@
             _snow1h = [snow[@"1h"] integerValue];
             _snow3h = [snow[@"3h"] integerValue];
         }
-        if ([dict[@"dt"] isKindOfClass:[NSString class]]) {
+        if (dict[@"dt"]) {
             NSTimeInterval dt = [dict[@"dt"] doubleValue];
             _requestDate = [self NSDateFromUTC:dt];
         }
         NSDictionary *sys = dict[@"sys"];
         if ([sys isKindOfClass:[NSDictionary class]]) {
             _country = sys[@"country"];
-            NSTimeInterval sunrise = [sys[@"sunrise"] doubleValue];
-            _sunrise = [self NSDateFromUTC:sunrise];
-            NSTimeInterval sunset = [sys[@"sunset"] doubleValue];
-            _sunset = [self NSDateFromUTC:sunset];
+            if (sys[@"sunrise"]) {
+                NSTimeInterval sunrise = [sys[@"sunrise"] doubleValue];
+                _sunrise = [self NSDateFromUTC:sunrise];
+            }
+            if (sys[@"sunset"]) {
+                NSTimeInterval sunset = [sys[@"sunset"] doubleValue];
+                _sunset = [self NSDateFromUTC:sunset];
+            }
         }
     }
     return self;

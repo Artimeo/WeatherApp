@@ -11,7 +11,7 @@
 //typedef void (^OnButtonGetStartedDidTap)(void);
 
 @interface WTRWelcomeViewController ()
-@property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UIButton *chooseCityButton;
 @property (copy, nonatomic) void (^completionBlock)(void);
 @end
 
@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupTitles];
-//    [self setupNavigationBar];
+    self.chooseCityButton.layer.cornerRadius = 3;
 }
 
 - (void)setupTitles {
@@ -51,18 +51,8 @@
     NSLog(@"Edit did tap");
 }
 
-- (IBAction)buttonGetStartedDidTap:(UIButton *)sender {
+- (IBAction)buttonChooseCityDidTap:(UIButton *)sender {
     self.completionBlock();
-    
-    
-    
-//    self.contentView.hidden = YES;
-//    UIViewController *searchViewController = [[UIViewController alloc] init];
-//    searchViewController.view.backgroundColor = UIColor.redColor;
-//    [self.navigationController presentViewController:searchViewController animated:YES completion:^{
-//
-//    }];
-    
 }
 
 

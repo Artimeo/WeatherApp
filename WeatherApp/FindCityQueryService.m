@@ -13,7 +13,7 @@ typedef NSDictionary <NSString *, id> * JSONDictionary;
 const NSString *qAPPID = @"b25c1900a4b79a996e0bb44831c80b20";
 const NSString *qType = @"like";
 const NSString *qUnits = @"metric";
-const NSString *qLang = @"ru";
+const NSString *qLang = @"en";
 
 @interface FindCityQueryService()
 @property (nonatomic, copy) NSString *errorMessage;

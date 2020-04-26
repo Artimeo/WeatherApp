@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WTRWelcomeViewController">
             <connections>
-                <outlet property="contentView" destination="Bkj-dv-c60" id="KjC-YF-sqv"/>
+                <outlet property="chooseCityButton" destination="UnY-8V-Mxh" id="EF1-Tc-QH1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -31,7 +31,7 @@
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <connections>
-                                <action selector="buttonGetStartedDidTap:" destination="-1" eventType="touchUpInside" id="2x7-gi-K9a"/>
+                                <action selector="buttonChooseCityDidTap:" destination="-1" eventType="touchUpInside" id="2x7-gi-K9a"/>
                             </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="FPG-5b-0M6">
@@ -75,6 +75,6 @@
         </view>
     </objects>
     <resources>
-        <image name="rain" width="128" height="128"/>
+        <image name="rain" width="170.66667175292969" height="170.66667175292969"/>
     </resources>
 </document>

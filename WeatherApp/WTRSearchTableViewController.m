@@ -31,10 +31,12 @@ static NSString *kCellIdentifier = @"searchedCityCell";
     [self setupSearchController];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.searchController setActive:YES];
-    [self.searchController.searchBar becomeFirstResponder];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.searchController.searchBar becomeFirstResponder];
+    });
 }
 
 - (CitiesModel *)model {
@@ -69,6 +71,9 @@ static NSString *kCellIdentifier = @"searchedCityCell";
 - (void)configureCell:(SearchedCityTableViewCell *)cell withCity:(CityItem *) city{
     cell.city.text = city.name;
     cell.country.text = city.country;
+    cell.currentWeather.text = [NSString stringWithFormat:@"%.1lf°C", city.temp];
+    cell.weatherDescription.text = [NSString stringWithFormat:@"%@", city.weatherDescription];
+    cell.weatherIcon.image = [UIImage imageNamed: city.weatherIconCode];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
