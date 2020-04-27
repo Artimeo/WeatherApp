@@ -15,7 +15,5 @@
 
 @property (nonatomic, strong, readonly) UINavigationController *navigationController;
 
-- (instancetype)initWithNavigationController:(UINavigationController *)nvc;
-
 @end
 

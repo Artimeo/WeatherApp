@@ -21,25 +21,14 @@
 - (instancetype)init {
     self = [super init];
     if (self){
-        __weak AppCoordinator *welf = self;
-        [self startWithCompletion:^{
-            welf.navigationController = [[UINavigationController alloc] initWithRootViewController:welf.welcomeViewController];
-        }];
+        [self start];
     }
     return self;
 }
 
-- (instancetype)initWithNavigationController:(UINavigationController *)nvc {
-    self = [super init];
-    if (self) {
-        _navigationController = nvc;
-    }
-    return self;
-}
-
-- (void)startWithCompletion:(void (^)(void))completion {
+- (void)start {
     [self showWelcomeScreen];
-    completion();
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.welcomeViewController];
 }
 
 - (void)showWelcomeScreen {
@@ -53,9 +42,9 @@
 }
 
 - (void)showSearchViewController {
-    //__weak AppCoordinator *welf = self;
+    __weak AppCoordinator *welf = self;
     self.searchViewController = [[WTRSearchTableViewController alloc] initWithCompletion:^{
-        
+        [welf.navigationController dismissViewControllerAnimated:YES completion:nil];
     }];
     [self.navigationController presentViewController:self.searchViewController animated:YES completion:nil];
 }
