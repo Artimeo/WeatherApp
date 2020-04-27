@@ -14,6 +14,7 @@
 @property (nonatomic, strong, readonly) UINavigationController *navigationController;
 - (void)showSearchViewController;
 - (void)showCitiesScrollView;
+- (void)presentRootController;
 
 @end
 

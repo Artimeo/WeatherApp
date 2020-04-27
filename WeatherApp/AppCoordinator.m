@@ -30,6 +30,14 @@
 - (void)start {
     self.rootViewController = [[WTRRootViewController alloc] initWithCoordinator:self];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.rootViewController];
+    [self presentRootController];
+}
+
+- (void)presentRootController {
+    if (self.navigationController.presentedViewController == self.searchViewController) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    }
+    
     if (self.rootViewController.model.count == 0) {
         [self showWelcomeScreen];
     }
@@ -44,15 +52,12 @@
 }
 
 - (void)showSearchViewController {
-    __weak AppCoordinator *welf = self;
-    self.searchViewController = [[WTRSearchTableViewController alloc] initWithCompletion:^{
-        [welf.navigationController dismissViewControllerAnimated:YES completion:nil];
-    }];
+    self.searchViewController = [[WTRSearchTableViewController alloc] initWithCoordinator:self Model:self.rootViewController.model];
     [self.navigationController presentViewController:self.searchViewController animated:YES completion:nil];
 }
 
 - (void)showCitiesScrollView {
-    
+    NSLog(@"there are cities");
 }
 
 @end

@@ -9,22 +9,24 @@
 #import "WTRSearchTableViewController.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "SearchedCityTableViewCell.h"
-#import "CitiesModel.h"
 #import "CityItem.h"
 
 static NSString *kCellIdentifier = @"searchedCityCell";
 
 @interface WTRSearchTableViewController () <UISearchBarDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
+@property (nonatomic, weak) AppCoordinator *coordinator;
 @property (nonatomic, strong) UISearchController *searchController;
-@property (nonatomic, strong) CitiesModel *model;
-@property (copy, nonatomic) void (^completionBlock)(void);
+@property (nonatomic, weak) CitiesModel *model;
 @end
 
 @implementation WTRSearchTableViewController
 
-- (instancetype)initWithCompletion:(void (^)(void))completion {
+- (instancetype)initWithCoordinator:(AppCoordinator *)coordinator Model:(CitiesModel *)model {
     self = [super initWithNibName:@"WTRSearchTableViewController" bundle:nil];
-    self.completionBlock = completion;
+    if (self) {
+        _model = model;
+        _coordinator = coordinator;
+    }
     return self;
 }
 
@@ -40,13 +42,6 @@ static NSString *kCellIdentifier = @"searchedCityCell";
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.searchController.searchBar becomeFirstResponder];
     });
-}
-
-- (CitiesModel *)model {
-    if (!_model) {
-        _model = [[CitiesModel alloc] init];
-    }
-    return _model;
 }
 
 - (void)registerCell {
@@ -155,7 +150,7 @@ static NSString *kCellIdentifier = @"searchedCityCell";
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    self.completionBlock();
+    [self.coordinator presentRootController];
 }
 
 

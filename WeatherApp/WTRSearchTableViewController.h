@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppCoordinator.h"
+#import "CitiesModel.h"
 
 @interface WTRSearchTableViewController : UITableViewController
-- (instancetype)initWithCompletion:(void (^)(void))completion;
 
+- (instancetype)initWithCoordinator:(AppCoordinator *)coordinator Model:(CitiesModel *)model;
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
+
 @end
