@@ -7,13 +7,14 @@
 //
 
 #import "WTRSearchTableViewController.h"
+#import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "SearchedCityTableViewCell.h"
 #import "CitiesModel.h"
 #import "CityItem.h"
 
 static NSString *kCellIdentifier = @"searchedCityCell";
 
-@interface WTRSearchTableViewController () <UISearchBarDelegate>
+@interface WTRSearchTableViewController () <UISearchBarDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) CitiesModel *model;
 @property (copy, nonatomic) void (^completionBlock)(void);
@@ -31,6 +32,7 @@ static NSString *kCellIdentifier = @"searchedCityCell";
     [super viewDidLoad];
     [self registerCell];
     [self setupSearchController];
+    [self configureDZNEmptyDataSet];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -94,6 +96,47 @@ static NSString *kCellIdentifier = @"searchedCityCell";
  }
 
 
+#pragma mark - DZNEmptyDataSetSource
+
+- (void)configureDZNEmptyDataSet {
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
+    
+    // A little trick for removing the cell separators
+    self.tableView.tableFooterView = [UIView new];
+}
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+{
+    return [UIImage imageNamed:@"windmills"];
+}
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = @"No results";
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0f],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView
+{
+    return YES;
+}
+
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapView:(UIView *)view
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.searchController.searchBar becomeFirstResponder];
+    });
+}
+
+
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -105,7 +148,9 @@ static NSString *kCellIdentifier = @"searchedCityCell";
             [welf.tableView reloadData];
         });
     } error:^(NSString *errorMessage){
-        [welf showAlertWithMessage:errorMessage];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"no results");
+        });
     }];
 }
 
@@ -118,8 +163,7 @@ static NSString *kCellIdentifier = @"searchedCityCell";
 
 - (void)showAlertWithMessage:(NSString *)errorMessage {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-       handler:^(UIAlertAction * action) {}];
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];

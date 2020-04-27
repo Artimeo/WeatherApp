@@ -19,7 +19,7 @@
     __weak CitiesModel *welf = self;
     [self.queryService getSearchResultsWithQuery:searchQuery completion:^(NSArray<CityItem *> *cities, NSString *error) {
         welf.cities = cities;
-        if (error) {
+        if (error.length > 0) {
             onError(error);
         } else {
             onCompletion();

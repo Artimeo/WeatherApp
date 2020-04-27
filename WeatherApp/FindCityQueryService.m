@@ -84,7 +84,7 @@ const NSString *qLang = @"en";
     }
     
     NSArray *cities = response[@"list"];
-    if (!cities) {
+    if (!cities || cities.count == 0) {
         self.errorMessage = [self.errorMessage stringByAppendingString:@"Dictionary does not contain results key\n"];
         return;
     }
@@ -101,6 +101,13 @@ const NSString *qLang = @"en";
         _defaultSession = [NSURLSession sessionWithConfiguration:config];
     }
     return _defaultSession;
+}
+
+- (NSString *)errorMessage {
+    if (!_errorMessage) {
+        _errorMessage = @"";
+    }
+    return _errorMessage;
 }
 
 @end

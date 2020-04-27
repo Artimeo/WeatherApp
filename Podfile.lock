@@ -1,0 +1,16 @@
+PODS:
+  - DZNEmptyDataSet (1.8.1)
+
+DEPENDENCIES:
+  - DZNEmptyDataSet
+
+SPEC REPOS:
+  trunk:
+    - DZNEmptyDataSet
+
+SPEC CHECKSUMS:
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+
+PODFILE CHECKSUM: 098512eea41417c8daf11f9fbc6ce82adf27a67c
+
+COCOAPODS: 1.9.1
