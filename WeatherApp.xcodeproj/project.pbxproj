@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC3D25F02457340C00E45D6A /* WTRRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC3D25EF2457340C00E45D6A /* WTRRootViewController.m */; };
 		AC63C4B22439EBC800AD8068 /* WTRWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC63C4B02439EBC800AD8068 /* WTRWelcomeViewController.m */; };
 		AC63C4B32439EBC800AD8068 /* WTRWelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC63C4B12439EBC800AD8068 /* WTRWelcomeViewController.xib */; };
 		AC63C4B72439F7E700AD8068 /* WTRSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC63C4B52439F7E700AD8068 /* WTRSearchTableViewController.m */; };
@@ -43,6 +44,8 @@
 
 /* Begin PBXFileReference section */
 		6AAB25171A478C289E49D0C7 /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC3D25EE2457340C00E45D6A /* WTRRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WTRRootViewController.h; path = "/Users/artem/Documents/iOS-course/WeatherApp/WeatherApp/WTRRootViewController.h"; sourceTree = "<absolute>"; };
+		AC3D25EF2457340C00E45D6A /* WTRRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = WTRRootViewController.m; path = "/Users/artem/Documents/iOS-course/WeatherApp/WeatherApp/WTRRootViewController.m"; sourceTree = "<absolute>"; };
 		AC60736E243B6348004899C3 /* FindCityQueryService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindCityQueryService.h; sourceTree = "<group>"; };
 		AC63C4AF2439EBC800AD8068 /* WTRWelcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRWelcomeViewController.h; sourceTree = "<group>"; };
 		AC63C4B02439EBC800AD8068 /* WTRWelcomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRWelcomeViewController.m; sourceTree = "<group>"; };
@@ -147,6 +150,8 @@
 				ACFE175A2438D56000532E9E /* AppDelegate.m */,
 				AC63C4B9243A09AA00AD8068 /* AppCoordinator.h */,
 				AC63C4BA243A09AA00AD8068 /* AppCoordinator.m */,
+				AC3D25EE2457340C00E45D6A /* WTRRootViewController.h */,
+				AC3D25EF2457340C00E45D6A /* WTRRootViewController.m */,
 				AC63C4AF2439EBC800AD8068 /* WTRWelcomeViewController.h */,
 				AC63C4B02439EBC800AD8068 /* WTRWelcomeViewController.m */,
 				AC63C4B12439EBC800AD8068 /* WTRWelcomeViewController.xib */,
@@ -171,7 +176,6 @@
 				B3F3B69136B6CF52DF4BA1AA /* Pods-WeatherApp.debug.xcconfig */,
 				CD2D7835B00B30BB6AD7FDE1 /* Pods-WeatherApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -357,6 +361,7 @@
 				AC63C4C9243A93A100AD8068 /* SearchedCityTableViewCell.m in Sources */,
 				AC63C4B22439EBC800AD8068 /* WTRWelcomeViewController.m in Sources */,
 				AC63C4B72439F7E700AD8068 /* WTRSearchTableViewController.m in Sources */,
+				AC3D25F02457340C00E45D6A /* WTRRootViewController.m in Sources */,
 				ACFE175B2438D56000532E9E /* AppDelegate.m in Sources */,
 				ACFE176C2438D56300532E9E /* main.m in Sources */,
 				AC8199CD243E8D2600A40AB1 /* CitiesModel.m in Sources */,

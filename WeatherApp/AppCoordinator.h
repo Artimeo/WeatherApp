@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WTRWelcomeViewController.h"
-#import "WTRSearchTableViewController.h"
 
 
 @interface AppCoordinator : NSObject
 
 @property (nonatomic, strong, readonly) UINavigationController *navigationController;
+- (void)showSearchViewController;
+- (void)showCitiesScrollView;
 
 @end
 

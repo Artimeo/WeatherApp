@@ -6,14 +6,15 @@
 //  Copyright © 2020 Artem Buryakov. All rights reserved.
 //
 
-#import "AppCoordinator.h"
 #import "WTRWelcomeViewController.h"
 #import "WTRSearchTableViewController.h"
+#import "WTRRootViewController.h"
 
 @interface AppCoordinator()
 @property (nonatomic, strong, readwrite) UINavigationController *navigationController;
-@property (nonatomic, strong) WTRWelcomeViewController *welcomeViewController;
-@property (nonatomic, strong) WTRSearchTableViewController *searchViewController;
+@property (nonatomic, strong) WTRRootViewController             *rootViewController;
+@property (nonatomic, strong) WTRWelcomeViewController          *welcomeViewController;
+@property (nonatomic, strong) WTRSearchTableViewController      *searchViewController;
 @end
 
 @implementation AppCoordinator
@@ -27,18 +28,19 @@
 }
 
 - (void)start {
-    [self showWelcomeScreen];
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.welcomeViewController];
+    self.rootViewController = [[WTRRootViewController alloc] initWithCoordinator:self];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.rootViewController];
+    if (self.rootViewController.model.count == 0) {
+        [self showWelcomeScreen];
+    }
+    else {
+        [self showCitiesScrollView];
+    }
 }
 
 - (void)showWelcomeScreen {
-    if (!self.welcomeViewController) {
-        __weak AppCoordinator *welf = self;
-        self.welcomeViewController = [[WTRWelcomeViewController alloc] initWithCompletion:^{
-            [welf showSearchViewController];
-        }];
-        [self.navigationController addChildViewController:self.welcomeViewController];
-    }
+    self.welcomeViewController = [[WTRWelcomeViewController alloc] initWithCoordinator:self];
+    [self.rootViewController.view addSubview:self.welcomeViewController.view];
 }
 
 - (void)showSearchViewController {
@@ -47,6 +49,10 @@
         [welf.navigationController dismissViewControllerAnimated:YES completion:nil];
     }];
     [self.navigationController presentViewController:self.searchViewController animated:YES completion:nil];
+}
+
+- (void)showCitiesScrollView {
+    
 }
 
 @end

@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/artem/Documents/iOS-course/WeatherApp/WeatherApp/WTRRootViewController.h">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/artem/Documents/iOS-course/WeatherApp/WeatherApp/WTRRootViewController.m">
+   </FileRef>
+   <FileRef
       location = "group:WeatherApp.xcodeproj">
    </FileRef>
    <FileRef

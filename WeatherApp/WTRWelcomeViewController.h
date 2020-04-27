@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppCoordinator.h"
 
 @interface WTRWelcomeViewController : UIViewController
-- (instancetype)initWithCompletion:(void (^)(void))completion;
+- (instancetype)initWithCoordinator:(AppCoordinator *)coordinator;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
