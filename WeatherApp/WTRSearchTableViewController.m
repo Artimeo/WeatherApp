@@ -16,12 +16,14 @@ static NSString *kCellIdentifier = @"searchedCityCell";
 @interface WTRSearchTableViewController () <UISearchBarDelegate>
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) CitiesModel *model;
+@property (copy, nonatomic) void (^completionBlock)(void);
 @end
 
 @implementation WTRSearchTableViewController
 
 - (instancetype)initWithCompletion:(void (^)(void))completion {
     self = [super initWithNibName:@"WTRSearchTableViewController" bundle:nil];
+    self.completionBlock = completion;
     return self;
 }
 
@@ -33,7 +35,6 @@ static NSString *kCellIdentifier = @"searchedCityCell";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.searchController setActive:YES];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.searchController.searchBar becomeFirstResponder];
     });
@@ -69,8 +70,7 @@ static NSString *kCellIdentifier = @"searchedCityCell";
 #pragma mark - UITableViewDataSource
 
 - (void)configureCell:(SearchedCityTableViewCell *)cell withCity:(CityItem *) city{
-    cell.city.text = city.name;
-    cell.country.text = city.country;
+    cell.city.text = [NSString stringWithFormat:@"%@, %@", city.name, city.country];
     cell.currentWeather.text = [NSString stringWithFormat:@"%.1lf°C", city.temp];
     cell.weatherDescription.text = [NSString stringWithFormat:@"%@", city.weatherDescription];
     cell.weatherIcon.image = [UIImage imageNamed: city.weatherIconCode];
@@ -107,6 +107,10 @@ static NSString *kCellIdentifier = @"searchedCityCell";
     } error:^(NSString *errorMessage){
         [welf showAlertWithMessage:errorMessage];
     }];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.completionBlock();
 }
 
 

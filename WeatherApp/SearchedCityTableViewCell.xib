@@ -15,23 +15,12 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wKQ-2H-cf0">
-                        <rect key="frame" x="68" y="4.5" width="45.5" height="35"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7s-P5-aXH">
-                                <rect key="frame" x="0.0" y="0.0" width="45.5" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S0m-9H-VP9">
-                                <rect key="frame" x="0.0" y="20.5" width="45.5" height="14.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                    </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7s-P5-aXH">
+                        <rect key="frame" x="68" y="12" width="30.5" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+16°C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bTj-TX-ejd" userLabel="Current Weather">
                         <rect key="frame" x="183" y="12" width="48" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -55,17 +44,18 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="E7s-P5-aXH" firstAttribute="leading" secondItem="j5i-Z9-3cA" secondAttribute="trailing" constant="8" id="0JE-m7-mC7"/>
                     <constraint firstItem="j5i-Z9-3cA" firstAttribute="height" secondItem="jWb-Cr-IY8" secondAttribute="height" multiplier="1.13636" id="35c-GM-3EN"/>
                     <constraint firstItem="bTj-TX-ejd" firstAttribute="centerX" secondItem="jWb-Cr-IY8" secondAttribute="centerX" id="7YR-8I-3s1"/>
+                    <constraint firstItem="bTj-TX-ejd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="E7s-P5-aXH" secondAttribute="trailing" constant="8" id="Ir6-TA-Z7B"/>
                     <constraint firstAttribute="bottom" secondItem="AXH-tO-T5I" secondAttribute="bottom" constant="10" id="KfJ-j3-8EW"/>
                     <constraint firstAttribute="trailing" secondItem="AXH-tO-T5I" secondAttribute="trailing" constant="20" id="M6s-3S-2fk"/>
                     <constraint firstItem="F2t-ta-KKy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bTj-TX-ejd" secondAttribute="trailing" constant="8" id="Nml-ln-vTG"/>
                     <constraint firstItem="j5i-Z9-3cA" firstAttribute="leading" secondItem="jWb-Cr-IY8" secondAttribute="leading" constant="10" id="Qql-QQ-Qn9"/>
-                    <constraint firstItem="wKQ-2H-cf0" firstAttribute="leading" secondItem="j5i-Z9-3cA" secondAttribute="trailing" constant="8" id="XcZ-VD-bVC"/>
-                    <constraint firstItem="wKQ-2H-cf0" firstAttribute="centerY" secondItem="jWb-Cr-IY8" secondAttribute="centerY" id="euV-v8-KCw"/>
                     <constraint firstItem="AXH-tO-T5I" firstAttribute="centerY" secondItem="jWb-Cr-IY8" secondAttribute="centerY" id="gsA-6r-rfx"/>
                     <constraint firstItem="F2t-ta-KKy" firstAttribute="centerY" secondItem="jWb-Cr-IY8" secondAttribute="centerY" id="kUk-cn-mRj"/>
                     <constraint firstItem="AXH-tO-T5I" firstAttribute="top" secondItem="jWb-Cr-IY8" secondAttribute="top" constant="10" id="nKM-1K-6rW"/>
+                    <constraint firstItem="E7s-P5-aXH" firstAttribute="centerY" secondItem="jWb-Cr-IY8" secondAttribute="centerY" id="npg-6l-vFY"/>
                     <constraint firstItem="AXH-tO-T5I" firstAttribute="leading" secondItem="F2t-ta-KKy" secondAttribute="trailing" constant="8" id="sPQ-7G-Pee"/>
                     <constraint firstItem="bTj-TX-ejd" firstAttribute="centerY" secondItem="jWb-Cr-IY8" secondAttribute="centerY" id="uiB-6l-CJg"/>
                     <constraint firstItem="j5i-Z9-3cA" firstAttribute="centerY" secondItem="jWb-Cr-IY8" secondAttribute="centerY" id="z7x-Xq-Lw2"/>
@@ -74,7 +64,6 @@
             <connections>
                 <outlet property="addCityButton" destination="AXH-tO-T5I" id="QHe-5B-id7"/>
                 <outlet property="city" destination="E7s-P5-aXH" id="nBb-Hw-fVU"/>
-                <outlet property="country" destination="S0m-9H-VP9" id="9mX-ig-T0O"/>
                 <outlet property="currentWeather" destination="bTj-TX-ejd" id="ebZ-R4-ElZ"/>
                 <outlet property="weatherDescription" destination="F2t-ta-KKy" id="CQr-Ol-abI"/>
                 <outlet property="weatherIcon" destination="j5i-Z9-3cA" id="Gh4-je-W1B"/>

@@ -41,6 +41,7 @@ const NSString *qLang = @"en";
         
         if (error) {
             welf.errorMessage = [welf.errorMessage stringByAppendingFormat:@"DataTask error: %@\n", error.localizedDescription];
+            [welf.dataTask cancel];
             welf.dataTask = nil;
             completion(welf.cities, welf.errorMessage);
             return;
@@ -48,6 +49,7 @@ const NSString *qLang = @"en";
     
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (httpResponse) {
+            [welf.dataTask cancel];
             welf.dataTask = nil;
             [welf updateSearchResultsWithData:data];
             completion(welf.cities, welf.errorMessage);

@@ -10,7 +10,6 @@
 
 @interface SearchedCityTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *city;
-@property (weak, nonatomic) IBOutlet UILabel *country;
 @property (weak, nonatomic) IBOutlet UILabel *currentWeather;
 @property (weak, nonatomic) IBOutlet UILabel *weatherDescription;
 @property (weak, nonatomic) IBOutlet UIImageView *weatherIcon;
