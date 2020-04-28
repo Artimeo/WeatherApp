@@ -18,7 +18,7 @@
 @implementation WTRWelcomeViewController
 
 - (instancetype)initWithCoordinator:(AppCoordinator *)coordinator {
-    self = [super initWithNibName:@"WTRWelcomeViewController" bundle:nil];
+    self = [super initWithNibName:@"WTRWelcomeView" bundle:nil];
     if (self) {
         _coordinator = coordinator;
     }

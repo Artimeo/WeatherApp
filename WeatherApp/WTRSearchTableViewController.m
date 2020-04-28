@@ -24,8 +24,8 @@ static NSString *kCellIdentifier = @"searchedCityCell";
 - (instancetype)initWithCoordinator:(AppCoordinator *)coordinator Model:(CitiesModel *)model {
     self = [super init];
     if (self) {
-        _model = model;
         _coordinator = coordinator;
+        _model = model;
     }
     return self;
 }

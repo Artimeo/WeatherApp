@@ -9,12 +9,14 @@
 #import "WTRWelcomeViewController.h"
 #import "WTRSearchTableViewController.h"
 #import "WTRRootViewController.h"
+#import "WTRWeatherViewController.h"
 
 @interface AppCoordinator()
 @property (nonatomic, strong, readwrite) UINavigationController *navigationController;
 @property (nonatomic, strong) WTRRootViewController             *rootViewController;
 @property (nonatomic, strong) WTRWelcomeViewController          *welcomeViewController;
 @property (nonatomic, strong) WTRSearchTableViewController      *searchViewController;
+@property (nonatomic, strong) WTRWeatherViewController          *weatherViewController;
 @end
 
 @implementation AppCoordinator
@@ -47,6 +49,7 @@
 }
 
 - (void)showWelcomeScreen {
+    [self removeSubviewsFromRootViewController];
     self.welcomeViewController = [[WTRWelcomeViewController alloc] initWithCoordinator:self];
     [self.rootViewController.view addSubview:self.welcomeViewController.view];
 }
@@ -58,6 +61,16 @@
 
 - (void)showCitiesScrollView {
     NSLog(@"there are %lu cities in model", self.rootViewController.model.count);
+    [self removeSubviewsFromRootViewController];
+    self.weatherViewController = [[WTRWeatherViewController alloc] initWithCoordinator:self Model:self.rootViewController.model];
+    [self.rootViewController.view addSubview:self.weatherViewController.view];
+}
+
+- (void)removeSubviewsFromRootViewController {
+    NSArray *viewsToRemove = [self.rootViewController.view subviews];
+    for (UIView *v in viewsToRemove) {
+        [v removeFromSuperview];
+    }
 }
 
 @end
