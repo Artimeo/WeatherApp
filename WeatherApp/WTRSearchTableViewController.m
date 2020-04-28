@@ -22,7 +22,7 @@ static NSString *kCellIdentifier = @"searchedCityCell";
 @implementation WTRSearchTableViewController
 
 - (instancetype)initWithCoordinator:(AppCoordinator *)coordinator Model:(CitiesModel *)model {
-    self = [super initWithNibName:@"WTRSearchTableViewController" bundle:nil];
+    self = [super init];
     if (self) {
         _model = model;
         _coordinator = coordinator;
@@ -143,9 +143,9 @@ static NSString *kCellIdentifier = @"searchedCityCell";
             [welf.tableView reloadData];
         });
     } error:^(NSString *errorMessage){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"no results");
-        });
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            NSLog(@"no results");
+//        });
     }];
 }
 

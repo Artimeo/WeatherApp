@@ -11,7 +11,6 @@
 		AC63C4B22439EBC800AD8068 /* WTRWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC63C4B02439EBC800AD8068 /* WTRWelcomeViewController.m */; };
 		AC63C4B32439EBC800AD8068 /* WTRWelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC63C4B12439EBC800AD8068 /* WTRWelcomeViewController.xib */; };
 		AC63C4B72439F7E700AD8068 /* WTRSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC63C4B52439F7E700AD8068 /* WTRSearchTableViewController.m */; };
-		AC63C4B82439F7E700AD8068 /* WTRSearchTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC63C4B62439F7E700AD8068 /* WTRSearchTableViewController.xib */; };
 		AC63C4BB243A09AA00AD8068 /* AppCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = AC63C4BA243A09AA00AD8068 /* AppCoordinator.m */; };
 		AC63C4C9243A93A100AD8068 /* SearchedCityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC63C4C7243A93A100AD8068 /* SearchedCityTableViewCell.m */; };
 		AC63C4CA243A93A100AD8068 /* SearchedCityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC63C4C8243A93A100AD8068 /* SearchedCityTableViewCell.xib */; };
@@ -52,7 +51,6 @@
 		AC63C4B12439EBC800AD8068 /* WTRWelcomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WTRWelcomeViewController.xib; sourceTree = "<group>"; };
 		AC63C4B42439F7E700AD8068 /* WTRSearchTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRSearchTableViewController.h; sourceTree = "<group>"; };
 		AC63C4B52439F7E700AD8068 /* WTRSearchTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRSearchTableViewController.m; sourceTree = "<group>"; };
-		AC63C4B62439F7E700AD8068 /* WTRSearchTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WTRSearchTableViewController.xib; sourceTree = "<group>"; };
 		AC63C4B9243A09AA00AD8068 /* AppCoordinator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppCoordinator.h; sourceTree = "<group>"; };
 		AC63C4BA243A09AA00AD8068 /* AppCoordinator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppCoordinator.m; sourceTree = "<group>"; };
 		AC63C4C6243A93A100AD8068 /* SearchedCityTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchedCityTableViewCell.h; sourceTree = "<group>"; };
@@ -157,7 +155,6 @@
 				AC63C4B12439EBC800AD8068 /* WTRWelcomeViewController.xib */,
 				AC63C4B42439F7E700AD8068 /* WTRSearchTableViewController.h */,
 				AC63C4B52439F7E700AD8068 /* WTRSearchTableViewController.m */,
-				AC63C4B62439F7E700AD8068 /* WTRSearchTableViewController.xib */,
 				AC63C4C6243A93A100AD8068 /* SearchedCityTableViewCell.h */,
 				AC63C4C7243A93A100AD8068 /* SearchedCityTableViewCell.m */,
 				AC63C4C8243A93A100AD8068 /* SearchedCityTableViewCell.xib */,
@@ -284,7 +281,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC63C4B82439F7E700AD8068 /* WTRSearchTableViewController.xib in Resources */,
 				ACFE17692438D56300532E9E /* LaunchScreen.storyboard in Resources */,
 				AC63C4B32439EBC800AD8068 /* WTRWelcomeViewController.xib in Resources */,
 				AC63C4CA243A93A100AD8068 /* SearchedCityTableViewCell.xib in Resources */,

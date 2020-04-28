@@ -57,7 +57,7 @@
 }
 
 - (void)showCitiesScrollView {
-    NSLog(@"there are cities");
+    NSLog(@"there are %lu cities in model", self.rootViewController.model.count);
 }
 
 @end
