@@ -10,8 +10,11 @@
 
 @class CityItem;
 
-typedef void (^QueryResult) (NSArray <CityItem *> *, NSString *error);
+typedef void (^QueryResult) (NSArray <CityItem *> *);
 
 @interface FindCityQueryService : NSObject
-- (void)getSearchResultsWithQuery:(NSString *)qCity completion:(QueryResult)completion;
+
+@property (nonatomic, copy, readonly) NSString *errorMessage;
+- (void)loadCitiesWithQuery:(NSString *)qCity completion:(QueryResult)completion;
+
 @end

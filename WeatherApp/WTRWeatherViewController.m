@@ -45,6 +45,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:mm"];
+    
     CityItem *city = self.model.cities.firstObject;
     self.cityTitle.text = city.name;
     self.requestDate.text = @"today";
@@ -54,12 +57,12 @@
     self.feelsLike.text = [NSString stringWithFormat:@"feels like %.1lf°C", city.feelsLike];
     self.pressure.text = [NSString stringWithFormat:@"pressure %ld hPa", city.pressure];
     self.windSpeed.text = [NSString stringWithFormat:@"wind speed %.0lf m/s", city.feelsLike];
-    self.sunriseTime.text = [NSString stringWithFormat:@"sunrise\n %@", city.sunrise];
+    self.sunriseTime.text = [NSString stringWithFormat:@"sunrise\n %@", [dateFormatter stringFromDate:city.sunrise]];
     self.humidity.text = [NSString stringWithFormat:@"humidity %ld\%%", city.humidity];
     [self.humidityProgressBar setProgress:(city.humidity/100.)];
     self.cloudness.text = [NSString stringWithFormat:@"cloudness %ld\%%", city.cloudness];
     [self.cloudnessProgressBar setProgress:(city.cloudness/100.)];
-    self.sunsetTime.text = [NSString stringWithFormat:@"sunset\n %@", city.sunset];
+    self.sunsetTime.text = [NSString stringWithFormat:@"sunset\n %@", [dateFormatter stringFromDate:city.sunset]];
 }
 
 @end

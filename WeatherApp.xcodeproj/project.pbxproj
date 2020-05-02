@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC0CDFFE245D8C3A0003BDCA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC0CDFFD245D8C3A0003BDCA /* Default-568h@2x.png */; };
 		AC3D25F02457340C00E45D6A /* WTRRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC3D25EF2457340C00E45D6A /* WTRRootViewController.m */; };
 		AC3D25F724581B9800E45D6A /* WTRWeatherView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC3D25F624581B9800E45D6A /* WTRWeatherView.xib */; };
 		AC3D25FC24581C4500E45D6A /* WTRWeatherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC3D25FB24581C4500E45D6A /* WTRWeatherViewController.m */; };
@@ -45,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		6AAB25171A478C289E49D0C7 /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC0CDFFD245D8C3A0003BDCA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		AC3D25EE2457340C00E45D6A /* WTRRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WTRRootViewController.h; path = "/Users/artem/Documents/iOS-course/WeatherApp/WeatherApp/WTRRootViewController.h"; sourceTree = "<absolute>"; };
 		AC3D25EF2457340C00E45D6A /* WTRRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = WTRRootViewController.m; path = "/Users/artem/Documents/iOS-course/WeatherApp/WeatherApp/WTRRootViewController.m"; sourceTree = "<absolute>"; };
 		AC3D25F624581B9800E45D6A /* WTRWeatherView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WTRWeatherView.xib; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 		ACFE174D2438D56000532E9E = {
 			isa = PBXGroup;
 			children = (
+				AC0CDFFD245D8C3A0003BDCA /* Default-568h@2x.png */,
 				ACFE17582438D56000532E9E /* WeatherApp */,
 				ACFE17572438D56000532E9E /* Products */,
 				C50CBF9AF36BBEEE67A20EF6 /* Pods */,
@@ -294,6 +297,7 @@
 				AC63C4CA243A93A100AD8068 /* SearchedCityTableViewCell.xib in Resources */,
 				ACFE17662438D56300532E9E /* Assets.xcassets in Resources */,
 				AC3D25F724581B9800E45D6A /* WTRWeatherView.xib in Resources */,
+				AC0CDFFE245D8C3A0003BDCA /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

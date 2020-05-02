@@ -16,7 +16,7 @@ const NSString *qUnits = @"metric";
 const NSString *qLang = @"en";
 
 @interface FindCityQueryService()
-@property (nonatomic, copy) NSString *errorMessage;
+@property (nonatomic, copy, readwrite) NSString *errorMessage;
 @property (nonatomic, strong) NSMutableArray <CityItem *> *cities;
 @property (nonatomic, strong) NSURLSession *defaultSession;
 @property (nonatomic, strong) NSURLSessionDataTask *dataTask;
@@ -25,14 +25,24 @@ const NSString *qLang = @"en";
 
 @implementation FindCityQueryService
 
-- (void)getSearchResultsWithQuery:(NSString *)qCity completion:(QueryResult)completion {
-    [self.dataTask cancel];
+- (NSURLSession *)defaultSession {
+    if (!_defaultSession) {
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        _defaultSession = [NSURLSession sessionWithConfiguration:config];
+    }
+    return _defaultSession;
+}
+
+- (void)loadCitiesWithQuery:(NSString *)qCity completion:(QueryResult)completion {
+    self.dataTask = nil;
+    self.errorMessage = nil;
 
     NSURLComponents *urlComponents = [NSURLComponents componentsWithString:@"http://api.openweathermap.org/data/2.5/find"];
     urlComponents.query = [NSString stringWithFormat:@"q=%@&type=%@&units=%@&lang=%@&APPID=%@", qCity, qType, qUnits, qLang, qAPPID];
     
     NSURL *url = urlComponents.URL;
     if (!url) {
+        self.errorMessage = @"No url components with query\n";
         return;
     }
     
@@ -40,19 +50,16 @@ const NSString *qLang = @"en";
     self.dataTask = [self.defaultSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         if (error) {
-            welf.errorMessage = [welf.errorMessage stringByAppendingFormat:@"DataTask error: %@\n", error.localizedDescription];
-            [welf.dataTask cancel];
+            welf.errorMessage = [NSString stringWithFormat:@"DataTask error: %@\n", error.localizedDescription];
             welf.dataTask = nil;
-            completion(welf.cities, welf.errorMessage);
             return;
         }
     
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (httpResponse) {
-            [welf.dataTask cancel];
             welf.dataTask = nil;
             [welf updateSearchResultsWithData:data];
-            completion(welf.cities, welf.errorMessage);
+            completion(welf.cities);
         }
     }];
     
@@ -68,24 +75,24 @@ const NSString *qLang = @"en";
     @try {
         response = (JSONDictionary)[NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     } @catch (NSError *parseError) {
-        self.errorMessage = [self.errorMessage stringByAppendingFormat:@"JSONSerialization error: %@\n", parseError.localizedDescription];
+        self.errorMessage = [NSString stringWithFormat:@"JSONSerialization error: %@\n", parseError.localizedDescription];
         return;
     } @finally { }
     
     if (!response) {
-        self.errorMessage = [self.errorMessage stringByAppendingString:@"Empty Data\n"];
+        self.errorMessage = [NSString stringWithFormat:@"Empty Data\n"];
         return;
     }
     
     NSString *statusCode = response[@"cod"];
     if (![statusCode isEqualToString:@"200"]) {
-        self.errorMessage = [self.errorMessage stringByAppendingFormat:@"Server returned status code %@\n", statusCode];
+        self.errorMessage = [NSString stringWithFormat:@"Server returned status code %@\n", statusCode];
         return;
     }
     
     NSArray *cities = response[@"list"];
     if (!cities || cities.count == 0) {
-        self.errorMessage = [self.errorMessage stringByAppendingString:@"Dictionary does not contain results key\n"];
+        self.errorMessage = [NSString stringWithFormat:@"Dictionary does not contain results key\n"];
         return;
     }
     
@@ -93,21 +100,6 @@ const NSString *qLang = @"en";
         CityItem *foundCity = [[CityItem alloc] initWithDictionary:city];
         [self.cities addObject:foundCity];
     }
-}
-
-- (NSURLSession *)defaultSession {
-    if (!_defaultSession) {
-        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-        _defaultSession = [NSURLSession sessionWithConfiguration:config];
-    }
-    return _defaultSession;
-}
-
-- (NSString *)errorMessage {
-    if (!_errorMessage) {
-        _errorMessage = @"";
-    }
-    return _errorMessage;
 }
 
 @end

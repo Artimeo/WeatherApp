@@ -8,15 +8,18 @@
 
 #import "WTRSearchTableViewController.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
-#import "SearchedCityTableViewCell.h"
 #import "CityItem.h"
+#import "SearchedCityTableViewCell.h"
+#import "FindCityQueryService.h"
 
 static NSString *kCellIdentifier = @"searchedCityCell";
 
 @interface WTRSearchTableViewController () <UISearchBarDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 @property (nonatomic, weak) AppCoordinator *coordinator;
-@property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, weak) CitiesModel *model;
+@property (nonatomic, strong) UISearchController *searchController;
+@property (nonatomic, strong) NSArray<CityItem *> *cities;
+@property (nonatomic, strong) FindCityQueryService *queryService;
 @end
 
 @implementation WTRSearchTableViewController
@@ -57,10 +60,11 @@ static NSString *kCellIdentifier = @"searchedCityCell";
     self.definesPresentationContext = YES;
 }
 
-- (void)addRefreshControl {
-    self.tableView.refreshControl = [UIRefreshControl new];
-    self.tableView.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Loading..."];
-    [self.tableView.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+- (FindCityQueryService *)queryService {
+    if (!_queryService) {
+        _queryService = [[FindCityQueryService alloc] init];
+    }
+    return _queryService;
 }
 
 
@@ -74,16 +78,21 @@ static NSString *kCellIdentifier = @"searchedCityCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.model.count;
+    return self.cities.count;
 }
 
 - (SearchedCityTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SearchedCityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
     
     if (cell) {
-        [self configureCell:cell withCity:[self.model cityAtIndex:indexPath.row]];
+        [self configureCell:cell withCity:[self.cities objectAtIndex:indexPath.row]];
     }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.model updateWithCity:[self.cities objectAtIndex:indexPath.row]];
+    [self.coordinator presentRootController];
 }
          
  -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -138,14 +147,17 @@ static NSString *kCellIdentifier = @"searchedCityCell";
     NSString *searchQuery = self.searchController.searchBar.text;
     
     __weak WTRSearchTableViewController *welf = self;
-    [self.model loadCitiesWithQuery:searchQuery completion:^{
+    [self.queryService loadCitiesWithQuery:searchQuery completion:^(NSArray<CityItem *> *cities) {
+        if (!cities) {
+            NSLog(@"%@", welf.queryService.errorMessage);
+            return;
+        }
+        self.cities = cities;
+    
         dispatch_async(dispatch_get_main_queue(), ^{
             [welf.tableView reloadData];
         });
-    } error:^(NSString *errorMessage){
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            NSLog(@"no results");
-//        });
+        
     }];
 }
 
@@ -153,16 +165,6 @@ static NSString *kCellIdentifier = @"searchedCityCell";
     [self.coordinator presentRootController];
 }
 
-
-#pragma mark - Alert & etc.
-
-- (void)showAlertWithMessage:(NSString *)errorMessage {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-    
-    [alert addAction:defaultAction];
-    [self presentViewController:alert animated:YES completion:nil];
-}
 
 /*
 // Override to support conditional editing of the table view.

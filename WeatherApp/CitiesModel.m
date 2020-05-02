@@ -7,24 +7,19 @@
 //
 
 #import "CitiesModel.h"
-#import "FindCityQueryService.h"
 
 @interface CitiesModel()
-@property (nonatomic, strong) FindCityQueryService *queryService;
+@property (nonatomic, strong, readwrite) NSMutableArray<CityItem *> *cities;
 @end
 
 @implementation CitiesModel
 
-- (void)loadCitiesWithQuery:(NSString *)searchQuery completion:(VoidBlock)onCompletion error:(ErrorBlock)onError {
-    __weak CitiesModel *welf = self;
-    [self.queryService getSearchResultsWithQuery:searchQuery completion:^(NSArray<CityItem *> *cities, NSString *error) {
-        welf.cities = cities;
-        if (error.length > 0) {
-            onError(error);
-        } else {
-            onCompletion();
-        }
-    }];
+- (void)updateWithCities:(NSArray<CityItem *> *)cities {
+    self.cities = [[NSMutableArray alloc] initWithArray:cities];
+}
+
+- (void)updateWithCity:(CityItem *)city {
+    [self.cities addObject:city];
 }
 
 - (CityItem *)cityAtIndex:(NSInteger)index {
@@ -35,11 +30,11 @@
     return self.cities.count;
 };
 
-- (FindCityQueryService *)queryService {
-    if (!_queryService) {
-        _queryService = [[FindCityQueryService alloc] init];
+- (NSMutableArray<CityItem *> *)cities {
+    if (!_cities) {
+        _cities = [[NSMutableArray alloc] init];
     }
-    return _queryService;
+    return _cities;
 }
 
 @end

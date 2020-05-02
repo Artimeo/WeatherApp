@@ -8,14 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^VoidBlock) (void);
-typedef void (^ErrorBlock) (NSString *);
 @class CityItem;
 
 @interface CitiesModel : NSObject
-@property (nonatomic, strong) NSArray<CityItem *> *cities;
+@property (nonatomic, strong, readonly) NSMutableArray<CityItem *> *cities;
 
-- (void)loadCitiesWithQuery:(NSString *)searchQuery completion:(VoidBlock)onCompletion error:(ErrorBlock)onError;
+- (void)updateWithCities:(NSArray <CityItem *> *)cities;
+- (void)updateWithCity:(CityItem *)city;
 
 - (CityItem *)cityAtIndex:(NSInteger)index;
 - (NSUInteger)count;
